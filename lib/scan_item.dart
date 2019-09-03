@@ -24,4 +24,3 @@ class ScanItem {
     return map;
   }
 }
-© 2019 GitHub, Inc.

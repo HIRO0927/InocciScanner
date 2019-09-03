@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobile_vision/flutter_mobile_vision.dart';
-import 'package:flutterqrscan/database.dart';
-import 'package:flutterqrscan/models/scan_item.dart';
+import 'package:qr_scanner_app1/database.dart';
+import 'package:qr_scanner_app1/scan_item.dart';
 import 'package:share/share.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -66,7 +66,7 @@ class HistoryState extends State<History> {
 }
 
 class HomePageState extends State<HomePage> {
-  String result = "Hey there !";
+  String result = "Hey what's up?";
 
   Future _scanQR() async {
     List<Barcode> barcodes = [];
