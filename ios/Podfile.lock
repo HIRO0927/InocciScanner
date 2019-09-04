@@ -21,7 +21,7 @@ PODS:
 
 DEPENDENCIES:
   - barcode_scan (from `.symlinks/plugins/barcode_scan/ios`)
-  - Flutter (from `.symlinks/flutter/ios`)
+  - Flutter (from `.symlinks/flutter/ios-release`)
   - flutter_mobile_vision (from `.symlinks/plugins/flutter_mobile_vision/ios`)
   - flutter_stetho (from `.symlinks/plugins/flutter_stetho/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
@@ -37,7 +37,7 @@ EXTERNAL SOURCES:
   barcode_scan:
     :path: ".symlinks/plugins/barcode_scan/ios"
   Flutter:
-    :path: ".symlinks/flutter/ios"
+    :path: ".symlinks/flutter/ios-release"
   flutter_mobile_vision:
     :path: ".symlinks/plugins/flutter_mobile_vision/ios"
   flutter_stetho:
