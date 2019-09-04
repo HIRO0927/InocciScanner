@@ -55,7 +55,7 @@ class HistoryState extends State<History> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Scanner History"),
+          title: Text("残りの在庫"),
         ),
         body: new ListView.builder(
             itemCount: _items.length,
@@ -66,7 +66,7 @@ class HistoryState extends State<History> {
 }
 
 class HomePageState extends State<HomePage> {
-  String result = "Hey what's up?";
+  String result = "Hey sup, bro?";
 
   Future _scanQR() async {
     List<Barcode> barcodes = [];
@@ -112,10 +112,10 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("QR Scanner"),
+        title: Text("Inocci Scanner"),
         actions: <Widget>[
           FlatButton(
-            child: Text('History'),
+            child: Text('残りの在庫'),
             textColor: Color(0xFFFFFFFF),
             onPressed: () {
               Navigator.of(context).pushNamed("history");
@@ -131,7 +131,7 @@ class HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         icon: Icon(Icons.camera_alt),
-        label: Text("Scan"),
+        label: Text("scan"),
         onPressed: _scanQR,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
