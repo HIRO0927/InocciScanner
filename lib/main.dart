@@ -36,7 +36,7 @@ class HistoryState extends State<History> {
   }
 
   _initDatabase() async {
-
+    String path = await getDatabaseFilePath("scan_history.db");
     Database db = await openReadOnlyDatabase(path);
 
     List<Map> data = await db.query("scan_hisoty", columns: ["text"]);
@@ -66,7 +66,7 @@ class HistoryState extends State<History> {
 }
 
 class HomePageState extends State<HomePage> {
-  String result = "Hey sup, bro?";
+  String result = "Hey sup bro?";
 
   Future _scanQR() async {
     List<Barcode> barcodes = [];
@@ -131,7 +131,7 @@ class HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         icon: Icon(Icons.camera_alt),
-        label: Text("scan"),
+        label: Text("Scan"),
         onPressed: _scanQR,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
