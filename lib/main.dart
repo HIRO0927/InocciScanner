@@ -36,7 +36,7 @@ class HistoryState extends State<History> {
   }
 
   _initDatabase() async {
-    String path = await getDatabaseFilePath("scan_history.db");
+
     Database db = await openReadOnlyDatabase(path);
 
     List<Map> data = await db.query("scan_hisoty", columns: ["text"]);
