@@ -1,23 +1,28 @@
 import 'package:flutter_mobile_vision/flutter_mobile_vision.dart';
 
+//スキャンアイテム定義
+
 class ScanItem {
   int id;
-  String text;
+  String name;
+  String code;
 
   static const String columnId = "id";
-  static const String columnText = "text";
+  static const String columnName = "text";
+  static const String columnCode = "code";
 
   ScanItem.fromMap(Map map) {
     id = map[columnId];
-    text = map[columnText];
+    name = map[columnName];
+    code = map[columnCode];
   }
 
   ScanItem.fromBarcode(Barcode barcode) {
-    text = barcode.displayValue;
+    code = barcode.displayValue;
   }
 
   Map<String, dynamic> toMap() {
-    Map<String, dynamic> map = {columnText: text};
+    Map<String, dynamic> map = {columnCode: code};
     if (id != null) {
       map[columnId] = id;
     }

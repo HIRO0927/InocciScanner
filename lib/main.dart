@@ -1,15 +1,17 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_mobile_vision/flutter_mobile_vision.dart';
-import 'package:qr_scanner_app1/database.dart';
-import 'package:qr_scanner_app1/scan_item.dart';
-import 'package:share/share.dart';
+import 'package:barcode_scan/barcode_scan.dart';
+import 'package:flutter/services.dart';
 import 'package:sqflite/sqflite.dart';
 
+import 'package:qr_scanner_app1/database.dart';
+import 'package:qr_scanner_app1/scan_item.dart';
+
 void main() => runApp(MaterialApp(
-  debugShowCheckedModeBanner: false,
+  debugShowCheckedModeBanner: false, //右上のバナー消すやつ
   home: HomePage(),
-  routes: <String, WidgetBuilder>{'history': (_) => History()},
+  routes: <String, WidgetBuilder>{'zaiko': (_) => Zaiko()},
 ));
 
 class HomePage extends StatefulWidget {
@@ -19,27 +21,27 @@ class HomePage extends StatefulWidget {
   }
 }
 
-class History extends StatefulWidget {
+class Zaiko extends StatefulWidget {
   @override
-  HistoryState createState() {
-    return HistoryState();
+  ZaikoState createState() {
+    return ZaikoState();
   }
 }
 
-class HistoryState extends State<History> {
-  List<ScanItem> _items = [];
+class ZaikoState extends State<Zaiko> {
+  List<ScanItem> _items = [];  //スキャンアイテムのリスト箱
 
   @override
-  void initState() {
+  void initState() { //最初の表示
     super.initState();
     _initDatabase();
   }
 
   _initDatabase() async {
-    String path = await getDatabaseFilePath("scan_history.db");
+    String path = await getDatabaseFilePath("zaiko_history.db");
     Database db = await openReadOnlyDatabase(path);
 
-    List<Map> data = await db.query("scan_hisoty", columns: ["text"]);
+    List<Map> data = await db.query("zaiko_hisoty", columns: ["text"]); //Map化する
 
     List<ScanItem> items = [];
     data.forEach((e) => items.add(ScanItem.fromMap(e)));
@@ -60,73 +62,60 @@ class HistoryState extends State<History> {
         body: new ListView.builder(
             itemCount: _items.length,
             itemBuilder: (context, index) {
-              return ListTile(title: Text("${_items[index].text}"));
+              return ListTile(title: Text("${_items[index].name}"));
             }));
   }
 }
 
 class HomePageState extends State<HomePage> {
-  String result = "Hey sup bro?";
+  String result = "Hey sup bro?"; //初期ホーム画面文言
 
   Future _scanQR() async {
-    List<Barcode> barcodes = [];
     try {
-      barcodes = await FlutterMobileVision.scan(
-        flash: false,
-        autoFocus: true,
-        formats: Barcode.ALL_FORMATS,
-        multiple: false,
-        showText: true,
-        camera: FlutterMobileVision.CAMERA_BACK,
-        fps: 30.0,
-      );
+      String qrResult = await BarcodeScanner.scan(); //qrResultにスキャン結果わたす
       setState(() {
-        result = barcodes[0].displayValue;
-        Share.share(result);
-        _insertScanItem(barcodes[0]);
+        result = qrResult;
       });
-    } on Exception {
-      result = 'Failed to get barcode.';
-      barcodes.add(new Barcode('Failed to get barcode.'));
-    }
-  }
-
-  _insertScanItem(Barcode barcode) async {
-    String path = await getDatabaseFilePath("scan_history.db");
-    Database db = await openDatabase(path, version: 1,
-        onCreate: (Database db, int version) async {
-          await db.execute(
-              "CREATE TABLE scan_hisoty (id INTEGER PRIMARY KEY, text TEXT)");
+    } on PlatformException catch (ex) {
+      if (ex.code == BarcodeScanner.CameraAccessDenied) {
+        setState(() {
+          result = "Camera permission was denied";
         });
-
-    await db.transaction((t) async {
-      int i =
-      await t.insert("scan_hisoty", ScanItem.fromBarcode(barcode).toMap());
-      print(i);
-    });
-
-    db.close();
+      } else {
+        setState(() {
+          result = "Unknown Error $ex";
+        });
+      }
+    } on FormatException {
+      setState(() {
+        result = "You pressed the back button before scanning anything";
+      });
+    } catch (ex) {
+      setState(() {
+        result = "Unknown Error $ex";
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Inocci Scanner"),
+        title: Text("Inocci Scanner"), //appbar title name
         actions: <Widget>[
           FlatButton(
             child: Text('残りの在庫'),
             textColor: Color(0xFFFFFFFF),
             onPressed: () {
-              Navigator.of(context).pushNamed("history");
+              Navigator.of(context).pushNamed("zaiko");
             },
           )
         ],
       ),
       body: Center(
         child: Text(
-          result,
-          style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
+          result, //条件分岐による結果を表示
+          style: new TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(

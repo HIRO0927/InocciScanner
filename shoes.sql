@@ -1,0 +1,5 @@
+CREATE TABLE shoes(
+   id INTEGER NOT NULL,
+   name TEXT NOT NULL,
+   code TEXT NOT NULL
+);

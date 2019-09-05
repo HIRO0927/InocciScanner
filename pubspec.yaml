@@ -43,6 +43,9 @@ flutter_icons:
   image_path: "assets/icon/icon.png"
 # The following section is specific to Flutter.
 flutter:
+  assets:
+    - assets/database.db
+    - assets/icon/icon.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
