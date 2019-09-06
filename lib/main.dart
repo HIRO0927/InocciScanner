@@ -10,6 +10,7 @@ import 'package:qr_scanner_app1/scan_item.dart';
 
 void main() => runApp(MaterialApp(
   debugShowCheckedModeBanner: false, //右上のバナー消すやつ
+  title: 'InocciScan',
   home: HomePage(),
   routes: <String, WidgetBuilder>{'zaiko': (_) => Zaiko()},
 ));
@@ -38,10 +39,10 @@ class ZaikoState extends State<Zaiko> {
   }
 
   _initDatabase() async {
-    String path = await getDatabaseFilePath("zaiko_history.db");
+    String path = await getDatabaseFilePath("database.db");
     Database db = await openReadOnlyDatabase(path);
 
-    List<Map> data = await db.query("zaiko_hisoty", columns: ["text"]); //Map化する
+    List<Map> data = await db.query("shoes", columns: ["name"]); //Map化する
 
     List<ScanItem> items = [];
     data.forEach((e) => items.add(ScanItem.fromMap(e)));

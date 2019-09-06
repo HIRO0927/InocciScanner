@@ -22,9 +22,9 @@ class ScanItem {
   }
 
   Map<String, dynamic> toMap() {
-    Map<String, dynamic> map = {columnCode: code};
+    Map<String, dynamic> map = {columnName: name};
     if (id != null) {
-      map[columnId] = id;
+      map[columnName] = name;
     }
     return map;
   }
