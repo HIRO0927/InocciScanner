@@ -105,6 +105,7 @@ class Stock extends StatefulWidget {
 }
 
 class _StockState extends State<Stock> {
+
   List<Widget> _items = <Widget>[];  //リスト_itemsを定義
 
   @override
