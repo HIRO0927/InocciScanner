@@ -51,7 +51,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   barcode_scan: 33f586d02270046fc6559135038b34b5754eaa4f
-  Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_mobile_vision: 42ce787efc2222db349c00b44c6d43aad8fdcf37
   flutter_stetho: 0e844616b41b86d6429e86a518ae3a46e83af7cd
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
