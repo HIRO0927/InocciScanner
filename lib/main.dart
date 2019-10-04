@@ -38,6 +38,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   List<Widget> _items = <Widget>[];  //リスト_itemsを定義
+  String result = "Hey sup bro?";
 
   @override
   void initState() { //最初の表示
@@ -75,7 +76,9 @@ class _HomePageState extends State<HomePage> {
   Future _deleteScanItem() async {
     List<Widget> list = <Widget>[];
     String scan = await BarcodeScanner.scan();
-
+    setState(() {
+      result = scan;
+    });
     String path = await getDatabaseFilePath("working_data.db");
     Database db = await openDatabase(path);
 
@@ -84,7 +87,6 @@ class _HomePageState extends State<HomePage> {
     await db.transaction((t) async {
       await t.execute('DELETE FROM shoes WHERE code = "$scan"');
     });
-
 
     for (Map item in resultMap) {
       //必要なデータを表示
@@ -99,6 +101,8 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _items = list; //_itemsにlist(必要なデータ)引き渡し
     });
+
+
   }
 
   @override
@@ -115,6 +119,13 @@ class _HomePageState extends State<HomePage> {
         label: Text("Scan"),
         onPressed: () {
           _deleteScanItem();
+          showDialog(
+              context: context,
+              builder: (BuildContext context) => AlertDialog(
+                title: Text(result),
+                content: Text("This is what you scanned."),
+              )
+          );
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
