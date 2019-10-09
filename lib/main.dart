@@ -62,7 +62,7 @@ class _HomePageState extends State<HomePage> {
       //必要なデータを表示
       list.add(
           ListTile(
-            title: Text(item['name']),
+            title: Text(item['name']!=null?item['name']:'Default Value'),
             subtitle: Text('(' + item['id'].toString() + ')  ' + item['code']),
           )
       );
@@ -92,7 +92,7 @@ class _HomePageState extends State<HomePage> {
       //必要なデータを表示
       list.add(
           ListTile(
-            title: Text(item['name']),
+            title: Text(item['name']!=null?item['name']:'Default Value'),
             subtitle: Text('(' + item['id'].toString() + ')  ' + item['code']),
           )
       );
